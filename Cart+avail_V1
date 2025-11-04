@@ -1,0 +1,52 @@
+
+import java.util.Scanner;
+public static void main(String[] args) {
+
+    //need code for availability of books, requires knowing how many books are in stock for that book, can be held in a variable or an array perchance?
+    int[] stock = {1, 15, 20, 25, 30};
+    String[] books = {"a", "b", "c", "d", "e"};
+    String[] cart;
+    cart = new String[99];
+    int cart_num = 0;
+    boolean done = false;
+
+    Scanner sc = new Scanner(System.in);
+
+    while (!(done)) {
+        System.out.println("Insert book number below:");
+        String book_str = sc.nextLine();
+        int book = Integer.parseInt(book_str);
+
+        if (stock[book] > 0) {
+            System.out.println("availability of book " + books[book] + " is " + stock[book]);
+            System.out.println("Add book to cart? Input YES or NO below:");
+            String confirm = sc.nextLine();
+            if (confirm.equals("YES")) {
+                stock[book] = stock[book] - 1;
+                cart[cart_num] = books[book];
+                System.out.println("Stock of book " + books[book] + " is now " + stock[book]);
+                cart_num += 1;
+            }
+        }
+        else {
+            System.out.println("Book " + books[book] + " is out of stock.");
+        }
+        //cart function
+        System.out.println("View Cart? Insert YES below if yes:"); //this needs to happen before cart_num+1 but after book is added
+        String cart_check = sc.nextLine();
+        if (cart_check.equals("YES")) {
+            System.out.println("Cart:");
+            for (int i = 0; i < cart_num; i++) {
+                System.out.println(cart[i]);
+            }
+
+        }
+
+        System.out.println("Please enter DONE to exit program or LOOK to look for more books below:");
+        String done_str = sc.nextLine();
+        if (done_str.equals("DONE")) {
+            done = true;
+        }
+    }
+    System.out.println("End code");
+}   
