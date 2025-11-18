@@ -1,0 +1,98 @@
+package librarysystem;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class LibrarySystemUI extends JFrame {
+
+    private final JTextField searchTitle;
+    private final JTextField searchAuthor;
+    private final JTextField searchGenre;
+    private final JTextField searchId;
+    private final JTextField searchShelf;
+    private final JButton searchBtn;
+    private final JButton checkoutBtn;
+    private final JButton viewCartBtn;
+    private final JTable resultsTable;
+    private final DefaultListModel<String> cartModel;
+
+    public LibrarySystemUI() {
+        setTitle("Library System - Search and Checkout");
+        setSize(800, 600);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Search Panel
+        JPanel searchPanel = new JPanel(new GridLayout(2, 6));
+        searchPanel.add(new JLabel("Title:"));
+        searchTitle = new JTextField();
+        searchPanel.add(searchTitle);
+
+        searchPanel.add(new JLabel("Author:"));
+        searchAuthor = new JTextField();
+        searchPanel.add(searchAuthor);
+
+        searchPanel.add(new JLabel("Genre:"));
+        searchGenre = new JTextField();
+        searchPanel.add(searchGenre);
+
+        searchPanel.add(new JLabel("ID:"));
+        searchId = new JTextField();
+        searchPanel.add(searchId);
+
+        searchPanel.add(new JLabel("Shelf:"));
+        searchShelf = new JTextField();
+        searchPanel.add(searchShelf);
+
+        searchBtn = new JButton("Search");
+        searchPanel.add(searchBtn);
+
+        add(searchPanel, BorderLayout.NORTH);
+
+        // Results Table
+        resultsTable = new JTable(
+            new Object[][]{}, 
+            new String[]{"ID", "Title", "Author", "Genre", "Shelf", "Available"}
+        );
+        add(new JScrollPane(resultsTable), BorderLayout.CENTER);
+
+        // Checkout Panel
+        JPanel checkoutPanel = new JPanel();
+        checkoutBtn = new JButton("Checkout Selected");
+        viewCartBtn = new JButton("View Cart");
+
+        checkoutPanel.add(checkoutBtn);
+        checkoutPanel.add(viewCartBtn);
+
+        add(checkoutPanel, BorderLayout.SOUTH);
+
+        // Cart
+        cartModel = new DefaultListModel<>();
+
+        // Event Listeners (demo stubs)
+        searchBtn.addActionListener(e -> performSearch());
+        checkoutBtn.addActionListener(e -> performCheckout());
+        viewCartBtn.addActionListener(e -> viewCart());
+
+        setVisible(true);
+    }
+
+    private void performSearch() {
+        // TODO: Connect to your repo's search logic
+        JOptionPane.showMessageDialog(this, "Search functionality not implemented.\nWire this to your repo's backend.");
+    }
+
+    private void performCheckout() {
+        // TODO: Connect to your repo's checkout logic
+        JOptionPane.showMessageDialog(this, "Checkout functionality not implemented.\nWire this to your repo's backend.");
+    }
+
+    private void viewCart() {
+        JList<String> cartList = new JList<>(cartModel);
+        JOptionPane.showMessageDialog(this, new JScrollPane(cartList), "Cart", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(LibrarySystemUI::new);
+    }
+}
