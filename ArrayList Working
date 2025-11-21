@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Main {
+    static class Book {
+        String author;
+        String genre;
+        String title;
+        int bookNumber;
+        public Book(String author, String genre, String title, int bookNumber) {
+            this.author = author;
+            this.genre = genre;
+            this.title = title;
+            this.bookNumber = bookNumber;
+        }
+    }
+    public static void main(String[] args) {
+        ArrayList<Book> books = new ArrayList<Book>();//Books!!!!
+        books.add (new Book("George Orwell", "Fiction", "1984", 1));
+         books.add (new Book("Albert Camus", "Fiction", "The Stranger", 2));
+         books.add (new Book("Erik Larson", "True Crime", "The Devil in the White City", 3));
+         books.add (new Book("Robert Greene", "Self Help", "The 48 Laws of Power", 4));
+         books.add (new Book("Ta-Nehisi Coates", "Biography", "Between the World and Me", 5));
+         books.add (new Book("C.M. Kösemen", "Sci-Fi", "All Tomorrows", 6));
+        Scanner sc = new Scanner(System.in);        // Ask user for book number
+        System.out.println("How would you like to search?");
+        System.out.println("1 - Book Number");
+        System.out.println("2 - Genre");
+        System.out.println("3 - Author");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        if (choice == 1) {
+            // NUMBER SEARCHING
+            System.out.println("Enter Book Number: ");
+            int searchNumber = sc.nextInt();
+
+            boolean found = false;
+            for (Book b : books) {
+                if (b.bookNumber == searchNumber) {
+                    printBook(b);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) System.out.println("Book not found.");
+        } else if (choice == 2) {
+            // GENRE SEARCHING
+            System.out.println("Enter Genre: ");
+            String genreSearch = sc.nextLine();
+            boolean found = false;
+            for (Book b : books) {
+                if (b.genre.equalsIgnoreCase(genreSearch)) {
+                    printBook(b);
+                    found = true;
+                }
+            }
+            if (!found) System.out.println("No books found in that genre.");
+        } else if (choice == 3) {
+            // AUTHOR SEARCHING
+            System.out.println("Enter Author Name: ");
+            String authorSearch = sc.nextLine();
+            boolean found = false;
+            for (Book b : books) {
+                if (b.author.equalsIgnoreCase(authorSearch)) {
+                    printBook(b);
+                    found = true;
+                }
+            }
+            if (!found) System.out.println("No books found by that author.");
+        } else {
+            System.out.println("Invalid choice.");
+        }
+    }
+    private static void printBook(Book b) {
+        System.out.println("Book Number: " + b.bookNumber);
+        System.out.println("Title: " + b.title);
+        System.out.println("Author: " + b.author);
+        System.out.println("Genre: " + b.genre);
+    }
+}
