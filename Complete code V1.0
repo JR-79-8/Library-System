@@ -1,0 +1,180 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Main {
+    static class Book {
+        String author;
+        String genre;
+        String title;
+        int bookNumber;
+        int stock;
+        public Book(String author, String genre, String title, int bookNumber, int stock) {
+            this.author = author;
+            this.genre = genre;
+            this.title = title;
+            this.bookNumber = bookNumber;
+            this.stock = stock;
+        }
+    }
+    public static void main(String[] args) {
+        ArrayList<Book> books = new ArrayList<Book>();//Books!!!!
+        books.add(new Book("George Orwell", "Fiction", "1984", 1, 20 ));
+        books.add(new Book("Albert Camus", "Fiction", "The Stranger", 2, 20 ));
+        books.add(new Book("Erik Larson", "True Crime", "The Devil in the White City", 3, 20));
+        books.add(new Book("Robert Greene", "Self Help", "The 48 Laws of Power", 4, 1));
+        books.add(new Book("Ta-Nehisi Coates", "Biography", "Between the World and Me", 5, 20));
+        books.add(new Book("C.M. Kösemen", "Sci-Fi", "All Tomorrows", 6,20));
+        Scanner sc = new Scanner(System.in);
+
+        String[] bookChoice = new String[6];
+        String[] cart = new String[999];
+        int a = 0;
+
+        boolean finish = false;
+        while (!finish) {
+            int num = 0;
+
+
+            System.out.println(" - Welcome!        - ");
+            System.out.println("1- Search for book - ");
+            System.out.println("2- Add a Book      - ");
+            System.out.println("3- Remove a Book   - ");
+            int BridgeOne = sc.nextInt();
+            sc.nextLine();
+            if (BridgeOne == 1) {
+                System.out.println("How would you like to search?");
+                System.out.println("1 - Book Number");
+                System.out.println("2 - Genre");
+                System.out.println("3 - Author");
+                int choice = sc.nextInt();
+                sc.nextLine();
+                if (choice == 1) {
+                    // NUMBER SEARCHING
+                    System.out.println("Enter Book Number: ");
+                    int searchNumber = sc.nextInt();
+                    sc.nextLine();
+                    boolean found = false;
+                    for (Book b : books) {
+                        if (b.bookNumber == searchNumber) {
+                            if (b.bookNumber > 0) {
+                                printBook(b);
+                                bookChoice[num] = b.title;
+                                num++;
+                                found = true;
+                            }
+                        }
+                    }
+                    if (!found) System.out.println("Book not found.");
+                } else if (choice == 2) {
+                    // GENRE SEARCHING
+                    System.out.println("Enter Genre: ");
+                    String genreSearch = sc.nextLine();
+                    boolean found = false;
+                    for (Book b : books) {
+                        if (b.genre.equalsIgnoreCase(genreSearch)) {
+                            if (b.bookNumber > 0) {
+                                printBook(b);
+                                bookChoice[num] = b.title;
+                                num++;
+                                found = true;
+                            }
+                        }
+                    }
+                    if (!found) System.out.println("No books found in that genre.");
+                } else if (choice == 3) {
+                    // AUTHOR SEARCHING
+                    System.out.println("Enter Author Name: ");
+                    String authorSearch = sc.nextLine();
+                    boolean found = false;
+                    for (Book b : books) {
+                        if (b.author.equalsIgnoreCase(authorSearch)) {
+                            if (b.bookNumber > 0) {
+                                printBook(b);
+                                bookChoice[num] = b.title;
+                                num++;
+                                found = true;
+                            }
+                        }
+                    }
+                    if (!found) System.out.println("No books found by that author.");
+                } else {
+                    System.out.println("Invalid choice.");
+                }
+
+                //cart system
+                if (num > 0) {
+                    System.out.println("Please choose one of the books above to add to cart");
+                    String choose = sc.nextLine();
+                    for (int i = 0; i < num; i++) {
+                        if (bookChoice[i].equalsIgnoreCase(choose)) {
+                            for (Book b : books) {
+                                if (b.title.equals(bookChoice[i])) {
+                                    if (b.stock == 0) {
+                                        System.out.println("Book " + b.title + " is out of stock");
+                                    } else {
+                                        cart[a] = bookChoice[i];
+                                        a++;
+                                        b.stock = b.stock - 1;
+                                        System.out.println("Stock of book " + b.title + " is now " + b.stock);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                    //cart function
+                System.out.println("View Cart? Insert YES below if yes:"); //this needs to happen before cart_num+1 but after book is added
+                String cart_check = sc.nextLine();
+                if (cart_check.equals("YES")) {
+                    System.out.println("Cart:");
+                    for (int i = 0; i < a; i++) {
+                        System.out.println(cart[i]);
+                    }
+                }
+            } else if (BridgeOne == 2) {// ADDING BOOK SECTIOn
+                System.out.println("- Enter a New Book Number -");
+                int NEWBOOKNUM = sc.nextInt();
+                sc.nextLine();
+                System.out.println("- Enter a New Book Title  -");
+                String NEWNAME = sc.nextLine();
+                System.out.println("- Enter a New Book Author -");
+                String NEWAUTHOR = sc.nextLine();
+                System.out.println("- Enter a New Book Genre  -");
+                String NEWGENRE = sc.nextLine();
+                System.out.println("- Enter a New Stock Value -");
+                int NEWSTOCK = sc.nextInt();
+                books.add(new Book(NEWAUTHOR, NEWGENRE, NEWNAME, NEWBOOKNUM, NEWSTOCK));
+                System.out.println("- NEW BOOK ADDED!         -");
+            }
+             else if (BridgeOne == 3) {//REMOVING BOOK SECTION!
+                System.out.println("Enter book number to be removed.");
+                int BADBOOKNUM = sc.nextInt();
+
+                boolean check = false;
+                for (Book b : books) {
+                    if (b.bookNumber == BADBOOKNUM) {
+                        printBook(b);
+                        b.bookNumber = -1;
+                        check = true;
+                        break;
+                    }
+                }
+
+            }
+
+                System.out.println("Done or continue looking? 0 for done 1 for keep looking");
+                int done = sc.nextInt();
+                if (done == 0) {
+                    finish = true;
+            }
+        }//Public Static Void End
+    }
+
+    private static void printBook(Book b) {
+        System.out.println("Book Number: " + b.bookNumber);
+        System.out.println("Title: " + b.title);
+        System.out.println("Author: " + b.author);
+        System.out.println("Genre: " + b.genre);
+        System.out.println("Stock: " + b.stock);
+    }
+}
